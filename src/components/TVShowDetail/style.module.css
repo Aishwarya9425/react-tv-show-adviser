@@ -4,6 +4,12 @@
 }
 
 .rating {
+  margin-top: 3px;
+  margin-left: 5px;
+}
+
+.rating_container {
+  display: flex;
 }
 
 .overview:hover {
