@@ -8,15 +8,12 @@
 
 .header {
   flex: 2;
-  background-color: goldenrod;
 }
 
 .tv_show_detail {
   flex: 4;
-  background-color: darkturquoise;
 }
 
 .recommended_tv_shows {
   flex: 2;
-  background-color: seagreen;
 }
