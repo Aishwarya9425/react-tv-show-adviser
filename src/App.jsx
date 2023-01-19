@@ -43,6 +43,11 @@ export function App() {
 
   console.log("recommendationList is ", recommendationList);
 
+  //update current bkg tv show when you click on the recommendation movie
+  function updateCurrentTVShow(tvShow){
+    setCurrentTVShow(tvShow)
+  }
+
   return (
     <div
       className={s.main_container}
@@ -76,7 +81,7 @@ export function App() {
 
       {/* Recommended Section */}
       <div className={s.recommended_tv_shows}>
-        {currentTVShow && <TVShowList tvShowList={recommendationList} />}
+        {currentTVShow && <TVShowList onClickItem={updateCurrentTVShow} tvShowList={recommendationList} />}
       </div>
     </div>
   );
