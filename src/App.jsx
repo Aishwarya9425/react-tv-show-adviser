@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { BACKDROP_BASE_URL } from "./config";
 import { TVShowDetail } from "./components/TVShowDetail/TVShowDetail";
+import { Logo } from "./components/Logo/Logo";
+import LogoImage from "./assets/images/logo.png";
 
 export function App() {
   const [currentTVShow, setCurrentTVShow] = useState();
@@ -35,8 +37,11 @@ export function App() {
       <div className={s.header}>
         <div className="row">
           <div className="col-4">
-            <div>LOGO</div>
-            <div>Subtitle</div>
+            <Logo
+              img={LogoImage}
+              title="Watch to watch?"
+              subtitle="Find a show you may like"
+            />
           </div>
           <div className="col-md-12 col-lg-4">
             <input style={{ width: " 100%" }} type="text" />
