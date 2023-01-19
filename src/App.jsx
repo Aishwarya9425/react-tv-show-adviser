@@ -10,6 +10,7 @@ import { TVShowListItem } from "./components/TVShowListItem/TVShowListItem";
 
 export function App() {
   const [currentTVShow, setCurrentTVShow] = useState();
+  const [recommendationList, setRecommendationList] = useState([]);
 
   async function fetchPopulars() {
     const popularTVShowList = await TVShowAPI.fetchPopulars();
@@ -18,11 +19,28 @@ export function App() {
     }
   }
 
+  async function fetchRecommendations(tvShowId) {
+    const popularRecommendations = await TVShowAPI.fetchRecommendations(
+      tvShowId
+    );
+    if (popularRecommendations.length > 0) {
+      setRecommendationList(popularRecommendations.slice(0, 10)); //get only the first tv
+    }
+  }
+
   useEffect(() => {
     fetchPopulars();
   }, []);
 
+  useEffect(() => {
+    if (currentTVShow) {
+      fetchRecommendations(currentTVShow.id);
+    }
+  }, [currentTVShow]); //listen to current TV show changes
+
   console.log("currentTVShow is ", currentTVShow); //1st render is undefined
+
+  console.log("recommendationList is ", recommendationList);
 
   return (
     <div
