@@ -8,9 +8,17 @@ import { BASE_URL, API_KEY_PARAM, BACKDROP_BASE_URL } from "../config";
 //get popular background tv show
 export class TVShowAPI {
   static async fetchPopulars() {
-    const response = await axios.get(`${BASE_URL}tv/popular${API_KEY_PARAM}`);
-    console.log("response.data.results --> ", response.data.results);
-    return response.data.results;
+    try {
+      const response = await axios.get(`${BASE_URL}tv/popular${API_KEY_PARAM}`);
+      console.log("response.data.results --> ", response.data.results);
+      return response.data.results;
+    } catch (error) {
+      alert(
+        "Something went wrong when fetching popular TV Shows!! : Error --> " +
+          error.message
+      );
+    }
+
     // return FAKE_POPULARS;
     //send request
     //return the response
@@ -18,11 +26,37 @@ export class TVShowAPI {
 
   //recommended tv shows section
   static async fetchRecommendations(tvShowId) {
-    const response = await axios.get(
-      `${BASE_URL}tv/${tvShowId}/recommendations${API_KEY_PARAM}`
-    );
-    console.log("fetchRecommendations --> ", response.data.results);
-    return response.data.results;
+    try {
+      const response = await axios.get(
+        `${BASE_URL}tv/${tvShowId}/recommendations${API_KEY_PARAM}`
+      );
+      console.log("fetchRecommendations --> ", response.data.results);
+      return response.data.results;
+    } catch (error) {
+      alert(
+        "Something went wrong when fetching recommendations : Error --> " +
+          error.message
+      );
+    }
+
+    // return FAKE_RECOMMENDATIONS;
+  }
+
+  //search tv shows..
+  static async fetchByTitle(title) {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/search/tv${API_KEY_PARAM}&query=${title}`
+      );
+      console.log("fetchRecommendations --> ", response.data.results);
+      return response.data.results;
+    } catch (error) {
+      alert(
+        "Something went wrong when fetching popular TV Shows!! : Error --> " +
+          error.message
+      );
+    }
+
     // return FAKE_RECOMMENDATIONS;
   }
 }

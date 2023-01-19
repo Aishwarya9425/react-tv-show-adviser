@@ -8,25 +8,49 @@ import { Logo } from "./components/Logo/Logo";
 import LogoImage from "./assets/images/logo.png";
 import { TVShowListItem } from "./components/TVShowListItem/TVShowListItem";
 import { TVShowList } from "./components/TVShowList/TVShowList";
+import { SearchBar } from "./components/SearchBar/SearchBar";
 
 export function App() {
   const [currentTVShow, setCurrentTVShow] = useState();
   const [recommendationList, setRecommendationList] = useState([]);
 
   async function fetchPopulars() {
-    const popularTVShowList = await TVShowAPI.fetchPopulars();
-    if (popularTVShowList.length > 0) {
-      setCurrentTVShow(popularTVShowList[0]); //get only the first tv
+    try {
+      const popularTVShowList = await TVShowAPI.fetchPopulars();
+      if (popularTVShowList.length > 0) {
+        setCurrentTVShow(popularTVShowList[0]); //get only the first tv
+      }
+    } catch (error) {
+      alert(
+        "Something went wrong when fetching popular TV Shows!! : Error --> " + error.message
+      );
     }
   }
 
   async function fetchRecommendations(tvShowId) {
-    const popularRecommendations = await TVShowAPI.fetchRecommendations(
-      tvShowId
-    );
-    if (popularRecommendations.length > 0) {
-      setRecommendationList(popularRecommendations.slice(0, 10)); //get only the first tv
+    try {
+      const popularRecommendations = await TVShowAPI.fetchRecommendations(
+        tvShowId
+      );
+      if (popularRecommendations.length > 0) {
+        setRecommendationList(popularRecommendations.slice(0, 10)); //get only the first tv
+      }
+    } catch (error) {
+      alert(
+        "Something went wrong when fetching recommendations : Error --> " + error.message
+      );
     }
+  }
+
+  async function fetchByTitle(title) {
+    try {
+      const searchResponse = await TVShowAPI.fetchByTitle(title);
+      if (searchResponse.length > 0) {
+        setCurrentTVShow(searchResponse[0]);
+      }
+    } catch (error) {alert(
+      "Something went wrong when searching movie : Error --> " + error.message
+    );}
   }
 
   useEffect(() => {
@@ -44,8 +68,8 @@ export function App() {
   console.log("recommendationList is ", recommendationList);
 
   //update current bkg tv show when you click on the recommendation movie
-  function updateCurrentTVShow(tvShow){
-    setCurrentTVShow(tvShow)
+  function updateCurrentTVShow(tvShow) {
+    setCurrentTVShow(tvShow);
   }
 
   return (
@@ -64,12 +88,12 @@ export function App() {
           <div className="col-4">
             <Logo
               img={LogoImage}
-              title="Watch to watch?"
-              subtitle="Find a show you may like"
+              title="Not sure what to watch?🤔"
+              subtitle="Find a show that you may like"
             />
           </div>
           <div className="col-md-12 col-lg-4">
-            <input style={{ width: " 100%" }} type="text" />
+            <SearchBar onSubmit={fetchByTitle} />
           </div>
         </div>
       </div>
@@ -81,7 +105,12 @@ export function App() {
 
       {/* Recommended Section */}
       <div className={s.recommended_tv_shows}>
-        {currentTVShow && <TVShowList onClickItem={updateCurrentTVShow} tvShowList={recommendationList} />}
+        {currentTVShow && (
+          <TVShowList
+            onClickItem={updateCurrentTVShow}
+            tvShowList={recommendationList}
+          />
+        )}
       </div>
     </div>
   );
