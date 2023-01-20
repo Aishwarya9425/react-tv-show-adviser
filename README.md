@@ -1,3 +1,12 @@
+
+Site is live at https://react-tv-show-adviser-lyart.vercel.app/
+
+
+![image](https://user-images.githubusercontent.com/51038336/213626875-632bbab1-c0b5-496d-97d6-632082090691.png)
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
